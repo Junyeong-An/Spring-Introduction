@@ -1,17 +1,21 @@
 package hello.helllospring.repository;
 
 import hello.helllospring.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-    public class MemoryMemberRepository implements MemberRepository{
 
-    private static Map<Long,Member> store = new HashMap<>();
+@Repository
+public class MemoryMemberRepository implements MemberRepository {
+
+    private static Map<Long, Member> store = new HashMap<>();
     private static Long sequence = 0L;
+
     @Override
     public Member save(Member member) {
         member.setId(++sequence);
-        store.put(member.getId(),member);
+        store.put(member.getId(), member);
         return member;
     }
 
@@ -30,5 +34,9 @@ import java.util.*;
     @Override
     public List<Member> findAll() {
         return new ArrayList<>(store.values());
+    }
+
+    public void cleatStore() {
+        store.clear();
     }
 }
